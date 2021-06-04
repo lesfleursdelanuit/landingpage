@@ -4,11 +4,6 @@ import "./ShootingStars.scss";
 class ShootingStars extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      animate: false,
-      hide: true,
-    };
-    this.ref = React.createRef();
   }
 
   render() {
