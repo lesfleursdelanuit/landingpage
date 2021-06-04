@@ -1,0 +1,161 @@
+/* ==========================================================================
+	 Mixins	 ========================================================================== */
+@mixin anim-filter($filter, $value) {
+  -webkit-filter: #{$filter}unquote("(#{$value})");
+  -moz-filter: #{$filter}unquote("(#{$value})");
+  -ms-filter: #{$filter}unquote("(#{$value})");
+  filter: #{$filter}unquote("(#{$value})");
+}
+@mixin anim-transition($property, $value) {
+  -webkit-transition: $property, $value;
+  -moz-transition: $property, $value;
+  -ms-transition: $property, $value;
+  transition: $property, $value;
+}
+@mixin anim-transform($property, $value) {
+  -webkit-transform: #{$property}unquote("(#{$value})");
+  -moz-transform: #{$property}unquote("(#{$value})");
+  -ms-transform: #{$property}unquote("(#{$value})");
+  transform: #{$property}unquote("(#{$value})");
+}
+
+.text-anim {
+  color: #ffffff;
+  font-size: 18px;
+  text-align: center;
+  font-family: "Julius Sans One", sans-serif;
+  position: absolute;
+  bottom: 30vh;
+  left: calc(50% - 131px);
+  z-index: 5;
+}
+
+.fleurs {
+  font-family: "Playball", cursive;
+  font-size: 50px;
+  position: relative;
+  top: 5px;
+  left: -2px;
+}
+.main-menu {
+  text-align: left;
+  font-size: 13px;
+  padding-top: 1em;
+  ul {
+    list-style-type: none;
+    padding: 0;
+    position: relative;
+    left: 55px;
+    width: 150px;
+
+    li {
+      background-color: #0d1c2a;
+      padding: 1em;
+      cursor: pointer;
+      color: lightblue;
+      a {
+        color: lightblue;
+        text-decoration: none;
+      }
+      &:nth-of-type(1) {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      &:nth-of-type(2) {
+        background-color: #0f2737;
+      }
+      &:nth-of-type(3) {
+        background-color: #3e3e70;
+      }
+      &:nth-of-type(4) {
+        background-color: #4a4a7c;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+      }
+    }
+  }
+}
+
+.hide {
+  animation: 1s ease-out 0s 1 fadeIn forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+	 Main Animation	 ========================================================================== */
+
+.text-anim {
+  span {
+    opacity: 0;
+
+    @include anim-transition(all, 550ms);
+    @include anim-filter(blur, 25px);
+    @include anim-transform(translateZ, 0);
+  }
+
+  $letters: 21; //Define number of letters in animation - including spaces
+  $timing: 60ms; //Delay between letters
+
+  //Sets timing differntly for each letter
+  @while $letters > 0 {
+    span:nth-child(#{$letters}) {
+      -webkit-transition-delay: $timing * $letters;
+      -moz-transition-delay: $timing * $letters;
+      -ms-transition-delay: $timing * $letters;
+      transition-delay: $timing * $letters;
+    }
+    $letters: $letters - 1;
+  }
+}
+
+//Class added that animates
+.text-anim.animate span {
+  opacity: 1;
+  @include anim-filter(blur, 0px);
+}
